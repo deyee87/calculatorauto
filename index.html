@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Customização de Veículos</title>
+    <!-- Estilos CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* Estilo para o título AUTOSPORT */
+        h1 {
+            color: #ff0000; /* Vermelho chamativo */
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para destaque */
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .category {
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #252525;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, background-color 0.3s;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Restabelecer para todos os quadrados, exceto o roxo */
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+            background-color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .button {
+            display: block;
+            margin: 10px 0;
+            padding: 14px;
+            text-align: center;
+            border: 2px solid #444;
+            background-color: #3b3b3b;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #444;
+            color: #ffb74d;
+        }
+
+        .selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #total {
+            margin-top: 20px;
+            font-size: 28px;
+            text-align: center;
+            font-weight: bold;
+            color: #ffeb3b;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .category:nth-child(1) { background-color: #455a64; }
+        .category:nth-child(2) { background-color: #5c6bc0; }
+        .category:nth-child(3) { background-color: #7e57c2; }
+        .category:nth-child(4) { background-color: #d32f2f; }
+        .category:nth-child(5) { background-color: #ff8a65; }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Estilo para inputs modernos */
+        input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background-color: #3b3b3b;
+            color: #fff;
+            text-align: center;
+            font-size: 16px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            background-color: #4a4a4a;
+            outline: none;
+        }
+
+        .input-label {
+            font-size: 14px;
+            margin-bottom: 2px;
+            text-align: center;
+        }
+
+        /* Ajustes para o quadrado roxo */
+        .category:nth-child(3) {
+            height: 480px;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Título -->
+    <h1>AUTOSPORT</h1>
+
+    <!-- Estrutura HTML -->
+    <div class="container">
+        <!-- Tuning Separado -->
+        <div class="category">
+            <h2>TUNING SEPARADO</h2>
+            <div class="button" data-value="60000" onclick="atualizaTotal(this)">Motor - R$60.000</div>
+            <div class="button" data-value="50000" onclick="atualizaTotal(this)">Freio - R$50.000</div>
+            <div class="button" data-value="50000" onclick="atualizaTotal(this)">Transmissão - R$50.000</div>
+            <div class="button" data-value="30000" onclick="atualizaTotal(this)">Turbo - R$30.000</div>
+            <div class="button" data-value="20000" onclick="atualizaTotal(this)">Suspensão - R$20.000</div>
+        </div>
+
+        <!-- Ferramentas e Reparos -->
+        <div class="category">
+            <h2>Ferramentas e Reparos</h2>
+            <div class="button" data-value="2000" onclick="atualizaTotal(this)">Reparo na Mecânica - R$2.000</div>
+            <div class="input-container">
+                <label class="input-label" for="kitAvancado">KIT AVANÇADO 3K</label>
+                <input type="number" id="kitAvancado" name="kitAvancado" value="0" min="0" step="1" onchange="atualizaKitAvancado(this)">
+            </div>
+            <div class="input-container">
+                <label class="input-label" for="kitBasico">KIT BÁSICO 1K</label>
+                <input type="number" id="kitBasico" name="kitBasico" value="1" min="0" step="1" onchange="atualizaKitBasico(this)">
+            </div>
+            <div class="input-container">
+                <label class="input-label" for="pneu">PNEU R$500</label>
+                <input type="number" id="pneu" name="pneu" value="0" min="0" step="1" onchange="atualizaPneu(this)">
+            </div>
+        </div>
+
+        <!-- Estética -->
+        <div class="category">
+            <h2>Estética</h2>
+            <div class="button" data-value="5000" onclick="atualizaTotal(this)">Pintura Geral - R$5.000</div>
+            <div class="button" data-value="3000" onclick="atualizaTotal(this)">Pintura Roda - R$3.000</div>
+            <div class="button" data-value="5000" onclick="atualizaTotal(this)">Vidro Fumê - R$5.000</div>
+            <div class="button" data-value="1000" onclick="atualizaTotal(this)">Placa Mercosul - R$1.000</div>
+        </div>
+
+        <!-- Outros -->
+        <div class="category">
+            <h2>Outros</h2>
+            <div class="button" data-value="120000" onclick="atualizaTotal(this)">Blindagem - R$120.000</div>
+            <div class="button" data-value="150000" onclick="atualizaTotal(this)">FULL TUNING - R$150.000</div>
+        </div>
+
+        <!-- Acessórios de Moto/Carro -->
+        <div class="category">
+            <h2>Acessórios Moto/Carro</h2>
+            <div class="input-container">
+                <label class="input-label" for="accessories">Quantidade de acessórios: </label>
+                <input type="number" id="accessories" name="accessories" value="0" min="0" step="1" onchange="atualizaAcessorios(this)">
+                <span> - R$3.000 por item</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total calculado -->
+    <div id="total">Total: R$ 0,00</div>
+
+    <!-- Script JavaScript -->
+    <script>
+        let total = 0;
+        let acessoriosTotal = 0;
+        let kitAvancadoTotal = 0;
+        let kitBasicoTotal = 0;
+        let pneuTotal = 0;
+
+        function atualizaTotal(element) {
+            const valor = parseInt(element.getAttribute('data-value'));
+
+            if (element.classList.contains('selected')) {
+                total -= valor;
+                element.classList.remove('selected');
+            } else {
+                total += valor;
+                element.classList.add('selected');
+            }
+
+            atualizarValorExibido();
+        }
+
+        function atualizaKitAvancado(element) {
+            const quantidade = parseInt(element.value);
+            const valorUnitario = 3000;
+            kitAvancadoTotal = quantidade * valorUnitario;
+            atualizarValorExibido();
+        }
+
+        function atualizaKitBasico(element) {
+            const quantidade = parseInt(element.value);
+            const valorUnitario = 1000;
+            kitBasicoTotal = quantidade * valorUnitario;
+            atualizarValorExibido();
+        }
+
+        function atualizaPneu(element) {
+            const quantidade = parseInt(element.value);
+            const valorUnitario = 500;
+            pneuTotal = quantidade * valorUnitario;
+            atualizarValorExibido();
+        }
+
+        function atualizaAcessorios(element) {
+            const quantidade = parseInt(element.value);
+            const valorUnitario = 3000;
+            acessoriosTotal = quantidade * valorUnitario;
+            atualizarValorExibido();
+        }
+
+        function atualizarValorExibido() {
+            const totalGeral = total + acessoriosTotal + kitAvancadoTotal + kitBasicoTotal + pneuTotal;
+            document.getElementById('total').innerText = `Total: R$ ${totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+    </script>
+</body>
+</html>
